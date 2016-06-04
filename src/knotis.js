@@ -290,7 +290,7 @@ class Knotis extends RestApi {
                 let responseData = response.data;
 
                 this.User.retrieve(
-                    null,
+                    null
                 ).then((response) => {
                     if (200 !== response.status_code) {
                         // error case
