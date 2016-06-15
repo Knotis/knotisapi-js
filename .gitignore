@@ -23,6 +23,8 @@ coverage
 build/Release
 
 # Built external library
+dist/
+build/
 lib/
 
 # Dependency directory
@@ -37,3 +39,6 @@ build*/
 
 # Hidden directories
 .*/
+
+# Source Maps
+*.map
