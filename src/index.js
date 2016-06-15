@@ -1,3 +1,3 @@
-import Knotis from './knotis';
+import Knotis from './app/knotis';
 
 export default Knotis;

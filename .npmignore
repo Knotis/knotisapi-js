@@ -1,2 +1,9 @@
 # Ignore source directory
 src/
+tests/
+node_modules/
+webpack.config.js
+.babelrc
+.eslintrc
+.npmignore
+*.map

@@ -1,6 +1,9 @@
 'use strict';
 
-import {Client, Resource } from 'librestapi';
+import {
+    Client as RestApi,
+    Resource
+} from 'librestapi';
 
 import Promise from 'promise';
 import extend from 'node.extend';

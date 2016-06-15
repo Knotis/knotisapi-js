@@ -1,32 +1,36 @@
-var webpack = require('webpack');
-var path = require('path');
-var libraryName = 'knotis';
-var outputFile = libraryName + '.js';
+var webpack = require('webpack'),
+    path = require('path'),
+    libraryName = 'knotisapi',
+    target, libraryTarget,
+    outputFile = libraryName + '.js',
+    env = process.env.WEBPACK_ENV,
+    entry = __dirname + '/src/index.js',
+    plugins = [], entry, outputFile,
+    UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
-var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-var env = process.env.WEBPACK_ENV;
-
-var plugins = [], outputFile;
-
-
-if (env === 'build') {
+if (env === 'web') {
     plugins.push(new UglifyJsPlugin({ minimize: true }));
     outputFile = libraryName + '.min.js';
+    libraryTarget = 'var';
+    target = 'web';
 
 } else {
     outputFile = libraryName + '.js';
+    entry = __dirname + '/src/index.js';
+    libraryTarget = 'umd';
+    target = 'node';
 
 }
 
 
 var config = {
-    entry: __dirname + '/src/index.js',
+    entry: entry,
     devtool: 'source-map',
     output: {
-        path: __dirname + '/lib',
+        path: __dirname + '/dist',
         filename: outputFile,
         library: libraryName,
-        libraryTarget: 'umd',
+        libraryTarget: libraryTarget,
         umdNamedDefine: true
     },
     module: {
@@ -47,7 +51,8 @@ var config = {
         root: path.resolve('./src'),
         extensions: ['', '.js']
     },
-    plugins: plugins
+    plugins: plugins,
+    target: target
 };
 
 module.exports = config;
