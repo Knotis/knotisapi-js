@@ -24,7 +24,7 @@ response
 
 .. code-block:: json
     :linenos:
-   
+
     {
         "id":"00000000-0000-0000-0000-000000000000",
         "default_identity_type":2,
@@ -105,3 +105,24 @@ DailyRewardSkip
 
 DailyRewardClaim
 ----------------
+
+MessengerThread
+---------------
+
+MessengerMessage
+----------------
+
+MessengerMessageRead
+--------------------
+
+MessengerMessageUnread
+----------------------
+
+MessengerParticipant
+--------------------
+
+MessengerAttachment
+-------------------
+
+MessengerView
+-------------
