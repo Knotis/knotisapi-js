@@ -127,10 +127,24 @@ class Knotis extends RestApi {
             }
         );
 
+        this.ImageReview = new Resource(
+            this, {
+                path: 'media/review',
+                name: 'image_review'
+            }
+        );
+
         this.StripeCustomer = new Resource(
             this, {
                 path: 'stripe/customer',
                 name: 'stripe_customer'
+            }
+        );
+
+        this.StripeCustomerCard = new Resource(
+            this, {
+                path: 'stripe/customer/card',
+                name: 'stripe_customer_card'
             }
         );
 
@@ -231,6 +245,55 @@ class Knotis extends RestApi {
                 name: 'rewards_daily_claim'
             }
         );
+
+        this.MessengerThread = new Resource(
+            this, {
+                path: 'messenger/thread',
+                name: 'messenger_thread'
+            }
+        );
+
+        this.MessengerMessage = new Resource(
+            this, {
+                path: 'messenger/message',
+                name: 'messenger_message'
+            }
+        );
+
+        this.MessengerMessageRead = new Resource(
+            this, {
+                path: 'messenger/message/read',
+                name: 'messenger_message_read'
+            }
+        );
+
+        this.MessengerMessageUnread = new Resource(
+            this, {
+                path: 'messenger/message/unread',
+                name: 'messenger_message_unread'
+            }
+        );
+
+        this.MessengerParticipant = new Resource(
+            this, {
+                path: 'messenger/participant',
+                name: 'messenger_participant'
+            }
+        );
+
+        this.MessengerAttachment = new Resource(
+            this, {
+                path: 'messenger/attachment',
+                name: 'messenger_attachment'
+            }
+        );
+
+        this.MessengerView = new Resource(
+            this, {
+                path: 'messenger/view',
+                name: 'messenger_view'
+            }
+        );
     };
 
     getLocation() {
@@ -316,6 +379,5 @@ class Knotis extends RestApi {
         });
     }
 }
-
 
 export default Knotis;
