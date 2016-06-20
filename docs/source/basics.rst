@@ -375,20 +375,242 @@ Businesses are collections of establishments. A business may have one or more es
 Rewards
 =======
 
-Daily Draw
-----------
+Knotis provides several ways to interact with rewards and promotions and reward them to identies.
 
-Offer/Offers
+Daily Reward
 ------------
 
-OfferCollection
----------------
+The Daily Reward feature gives identities a chance to select 1 offer from a random set of offers per day as a way to incentivize the user to take pictures and redeem offers at participating establishments.
+
+Draw
+++++
+
+Drawing a list of offers can be done by calling retrieve on the KnotisApi.DailyReward.Draw resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.DailyReward.Draw.retrieve().then(response => {
+        // response object contains list of offers to draw from.
+
+    });
+
+
+.. code-block:: json
+    :linenos:
+
+    {
+        "rewards":[
+            {
+                "id":"8e52e8ca-6ccc-40b0-9317-f3eff3f9c4ae",
+                "owner":{
+                    "id":"6ed25ef6-a364-496d-a7ce-4b2a13d92aa1",
+                    "identity_type":2,
+                    "name":"Apple Store University Village",
+                    "backend_name":"apple-store-university-village",
+                    "description":"",
+                    "available":true,
+                    "badge_image":null,
+                    "banner_image":{
+                        "url":"https://stage-aws-cloud.knotis.net/media/cache/f6/67/f6673775e6dcec3c7c4f7e5eb487063d.jpg",
+                        "pub_date":"2016-06-07T11:59:24.876000",
+                        "id":"343a1209-395a-40ff-9022-c13930cba000"
+                    },
+                    "tile_image_large":"https://stage-aws-cloud.knotis.net/media/cache/20/af/20af7094868b9ef1c8caae50974466e3.jpg",
+                    "tile_image_small":"https://stage-aws-cloud.knotis.net/media/cache/be/1c/be1cedd13fd6324011011ac4784d8e60.jpg",
+                    "location":{
+                        "latitude":47.664168,
+                        "longitude":-122.305423,
+                        "address":"4702 NE University Village Pl Seattle WA 98105"
+                    },
+                    "carousel_images":[{
+                        "url":"https://stage-aws-cloud.knotis.net/media/cache/f6/67/f6673775e6dcec3c7c4f7e5eb487063d.jpg",
+                        "pub_date":"2016-06-07T11:59:24.876000",
+                        "id":"343a1209-395a-40ff-9022-c13930cba000"
+                    }]
+                },
+                "offer_type":2,
+                "title":"$5 credit toward any purchase",
+                "description":null,
+                "restrictions":"$25.00 Minimum Minimum",
+                "start_time":"2016-06-07T12:28:35.128000",
+                "end_time":null,
+                "stock":null,
+                "unlimited":true,
+                "purchased":26,
+                "redeemed":0,
+                "published":false,
+                "active":false,
+                "completed":false,
+                "last_purchase":"2016-06-16T22:08:43.167000",
+                "price":5.0,
+                "price_retail":5.0,
+                "banner_image":{
+                    "url":"https://stage-aws-cloud.knotis.net/media/cache/35/a2/35a24ea1bef8b69c335c6ec8c0abd6e8.jpg",
+                    "pub_date":"2016-06-07T13:11:42.666000",
+                    "id":"57557bfb-e297-4224-8284-c514400cac6d"
+                },
+                "badge_image":null,
+                "tile_image_large":"https://stage-aws-cloud.knotis.nethttps://stage-aws-cloud.knotis.net/media/cache/09/83/0983357dc3317738894464243c92ca7e.jpg",
+                "tile_image_small":"https://stage-aws-cloud.knotis.nethttps://stage-aws-cloud.knotis.net/media/cache/25/76/257669b52487275c665c413ef7cfff7e.jpg",
+                "location":null
+            },
+            ... additional offers.
+        ],
+        "actions_remaining":3,
+        "last_action_time":"0001-01-01T00:00:00"
+    }
+
+Skip
+++++
+
+If an identity is not interested in a reward they can skip it to have a chance to view another one. Skip a reward by calling KnotisApi.DailyReward.Skip.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.DailyReward.Skip.create({
+        offer: '<reward_id=guid>'
+    }).then(response => {
+        // response contains info about the skip
+    
+    });
+
+The response data contains information about the skip.
+               
+Claim
++++++
+
+If the identity is interested in claiming a daily reward they call KnotisApi.DailyReward.Claim.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.DailyReward.Claim.create({
+        offer: '<reward_id=guid>'
+    }).then(response => {
+        // response contains info about the claim.
+    
+    });
+
+The response data contains information about the claimed offer.
 
 Purchase
 --------
 
+Purchases represent rewards that have been acquired by an identity either by purchasing offers, claiming daily rewards, or recieving random rewards from uploading pictures.
+
+To get a paginated list of a users purchases call KnotisApi.Purchase.retreive().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Purchase.retrieve().then(response => {
+        //response Contains paginated list of earned rewards.
+    });
+
+The response looks as follows:
+
+.. code-block:: json
+    :linenos:
+
+    {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+            {
+                "id": "c1af70cf-d483-4baa-927a-1a835e4bb16e",
+                "owner": "3c7fa04b-0297-4657-839b-fc68fc543cfe",
+                "offer_owner_id": "03e22a4a-607d-485d-8f45-488db0f878e6",
+                "offer_owner_name": "Victrola Coffee",
+                "redemption_code": "RB9A3O9XKA",
+                "transaction_type": "purchase",
+                "offer_id": "7b09961d-d73d-4ae6-970f-919435c08c85",
+                "transaction_context": "3c7fa04b-0297-4657-839b-fc68fc543cfe|4227ab7ae27f7158230fc329000b32e42ab97838|RB9A3O9XKA|free",
+                "reverted": false,
+                "offer_badge_image": null,
+                "offer_banner_image": {
+                    "url": "https:\/\/stage-aws-cloud.knotis.net\/media\/cache\/d2\/77\/d277d7b956733e205f14d212b72ea8bf.jpg",
+                    "pub_date": "2016-06-07T13:11:42.430000",
+                    "id": "aa53a1cf-1d8e-4fdd-b29b-ea747e3add80"
+                },
+                "offer_title": "$5 credit toward any purchase",
+                "offer_location": null,
+                "restrictions": "$25.00 Minimum Minimum",
+                "pub_date": "2016-06-20T15:52:47.258000"
+            }
+        ]
+    }
+
+The Purchase endpoint is location aware and Purchases will be sorted closest to farthest from a point specified by calling KnotisApi.setLocation().
+    
 Redemption
 ----------
+
+Redemption of a purchase is the final stage in the contract allowing the identity to confirm that goods and services have been satisfactorly rendered by the establishment where the identity had a earned reward available.
+
+Create a redemption by calling KnotisApi.Redemption.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Redemption.create({
+        transaction: '<purchase_id=id guid of the purchase to redeem>'
+    }).then(response => {
+        // response contains metadata about the redemption.
+
+    });
+
+
+After redeeming a purchase it will no longer be returned in the results that come from calling KnotisApi.Purchase.retrieve().
+
+Offer/Offers
+------------
+
+Offers
+++++++
+
+The Offers resource exposes all valid and available offers on Knotis. If the offer is valid for purchase it will be listed here by calling retrieve:
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Offers.retrieve().then(response => {
+        // response contains list of offers that are available for purchase.
+    
+    });
+
+    KnotisApi.Offers.retrieve('<offer_id=guid>').then(response => {
+        // response contains a single offer matching offer_id
+    
+    });
+
+
+Offer
++++++
+
+The offer resource exposes all offers on Knotis wether they are available for purchase or not. This is useful for showing an identity their expired offers or allowing an identity to view a purchased offer that is no longer available for puchase but can still be redeemed. There is no listing allowed on this resource so only retrieve with an id is supported.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Offer.retrieve().then(response => {
+        // response contains list of offers that are available for purchase.
+    
+    });
+
+    KnotisApi.Offer.retrieve('<offer_id=guid>').then(response => {
+        // response contains a single offer matching offer_id
+    
+    });
+
+
+OfferCollection
+---------------
+**Pending deprecation**.
+
+OfferCollection are custom indexes of offers that serve specific use cases. An example of an OfferCollection might be "All Offers In Seattle" or "All Resturaunts".
 
 Uploading Images
 ================
@@ -447,5 +669,5 @@ View
 Passports
 =========
 
-Deprecated.
+**Deprecated**.
 
