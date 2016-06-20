@@ -274,6 +274,9 @@ class Knotis extends RestApi {
             }
         );
 
+        this.MessengerMessage.Read = this.MessengerMessageRead;
+        this.MessengerMessage.Unread = this.MessengerMessageUnread;
+
         this.MessengerParticipant = new Resource(
             this, {
                 path: 'messenger/participant',
@@ -294,6 +297,14 @@ class Knotis extends RestApi {
                 name: 'messenger_view'
             }
         );
+
+        this.Messenger = {
+            Thread: this.MessengerThread,
+            Message: this.MessengerMessage,
+            Participant: this.MessengerParticipant,
+            Attachment: this.MessengerAttachment,
+            View: this.MessengerView
+        };
     };
 
     getLocation() {
