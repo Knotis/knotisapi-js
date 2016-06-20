@@ -3,9 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. toctree::
-   :maxdepth: 2
-
 .. _index:	     
 
 Knotis Javascript API - Javascript access to the Knotis REST API
@@ -20,14 +17,11 @@ The purpouse of this library is to enable easy access to the Knotis REST API in 
 
 Documentation
 -------------
+.. toctree::
 
-Follow the links bellow to get started using the Knotis Javascript API:
+    basics
 
-    | :ref:`basics`
-    | :ref:`resources`
+Search The Docs
++++++++++++++++
 
-Indices and tables
-++++++++++++++++++
-
-* :ref:`genindex`
 * :ref:`search`
