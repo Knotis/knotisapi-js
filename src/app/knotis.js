@@ -246,6 +246,12 @@ class Knotis extends RestApi {
             }
         );
 
+        this.DailyReward = {
+            Draw: this.DailyRewardDraw,
+            Skip: this.DailyRewardSkip,
+            Claim: this.DailyRewardClaim
+        };
+
         this.MessengerThread = new Resource(
             this, {
                 path: 'messenger/thread',
