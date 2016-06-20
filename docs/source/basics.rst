@@ -45,8 +45,6 @@ The create method submits a HTTP **POST** request to the endpoint defined by the
 
 The create method takes one parameter: *data*, which is a Javascript object containing the fields to submit with the POST.
 
-example
-^^^^^^^
 .. code-block:: js
     :linenos:
 
@@ -66,8 +64,6 @@ update
 
 The update method submits a HTTP **PUT** request to the endpoint defined by the resource. The call signature is similar to the create method but it requires an additional *id* paramter that identifies the resource to be updated.
 
-example
-^^^^^^^
 .. code-block:: js
     :linenos:
 
@@ -93,8 +89,6 @@ There are two optional parameters that can be passed into retrieve:
 * *id*: this is the identifier (usually a GUID) of the specific resource you want to retrieve. if no id is passed then a paginated list of available resource instances will be returned in the response.
 * *data*: this is a Javascript object containing parameters that will be added to the query string.
 
-example
-^^^^^^^
 .. code-block:: js
     :linenos:
 
@@ -118,8 +112,6 @@ There is one required parameter:
 
 * *id*: this is the identifier (usually a GUID) of the specific resource you want to destroy. 
 
-example
-^^^^^^^
 .. code-block:: js
     :linenos:
 
@@ -144,10 +136,10 @@ Several resources on Knotis have location awareness built in and results will be
 .. code-block:: js
     :linenos:
 
-    KnotisApi.setLocation(
-        47.6062,
-        122.3321
-    );  // These will be passed along in the query string of the URI for every request.
+    KnotisApi.setLocation({ coords: {
+        latitude: 47.6062,
+        longitude: 122.3321
+    }});  // These will be passed along in the query string of the URI for every request.
 
 Authentication
 ==============
@@ -323,16 +315,62 @@ The id parameter is required on this resource as paginated listing of the identi
 
 Individual
 ----------
+All new users are given an Individual identity to represent them on Knotis. This is the only identity that will come back from IdentitySwitcher on a freshly created user.
 
 Individual identities are a subset of Identity and can also be retrieved via the Identity resource. This endpoint is here mostly for convienience and to support future Individual resource behavior and functionality.
 
 Establishment
 -------------
 
-Establishment data is the data that can be seen on the knotis home page ( https://knotis.com/ ). This is an accounting of all storefronts that are indexed by Knotis. This endpoint is location aware and results will be sorted from closest to farthest from a point indicated by passing a lattitude and longitude along with the request.
+Establishment data is the data that can be seen on the knotis home page ( https://knotis.com/ ). This is an accounting of all storefronts that are indexed by Knotis. This endpoint is location aware and results will be sorted from closest to farthest from a point set by calling KnotisApi.setLocation().
+
+To get a paginated list of Establishments call retrieve():
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Establishment.retrieve().then(response => {
+        // response object contains paginated list of establishments.
+
+    });
+
+.. code-block:: json
+    :linenos:
+
+    HTTP 200 OK
+    Content-Type: application/json
+    Vary: Accept
+    Allow: GET, OPTIONS
     
+    {
+        "count": 2181862,
+        "next": "https://stage-aws-cloud.knotis.net/api/v0/identity/establishment/?page=2",
+        "previous": null,
+        "results": [
+            {
+                "id": "c4187615-d927-4597-9f61-479d53b66e9f",
+                "identity_type": 2,
+                "name": "Oceanaire Seafood Room",
+                "badge_image": null,
+                "banner_image": {
+                    "url": "https://stage-aws-cloud.knotis.net/static/images/tile-background-default.png"
+                },
+                "tile_image_large": "https://stage-aws-cloud.knotis.net/static/images/tile-background-default.png",
+                "tile_image_small": "https://stage-aws-cloud.knotis.net/static/images/tile-background-default.png",
+                "location": {
+                    "latitude": 47.614063,
+                    "longitude": -122.33545,
+                    "address": "1700 7th Ave Seattle WA 98101"
+                }
+            },
+            ... additional establishments
+        ]
+    }
+        
 Business
 --------
+
+Businesses are collections of establishments. A business may have one or more establishments that are managed by managers of the business.
 
 Rewards
 =======
