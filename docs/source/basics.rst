@@ -215,6 +215,17 @@ A successful response will look something like the following:
 
 The most useful fields are probably username, default_identity and default_identity_type. Learn more about identities in the next section.
 
+A call to the User resource happens automatically upon sucessful authentication to get the users default_identity and default_identity_type and set it as the current_identity and current_identity_type respectively. The API will make all requests as this identity. If you want to change the current identity you can do so by making a call to KnotisApi.setCredentials().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.setCredentials({
+       current_identity: '<id guid of the identity the API should be acting as>'.
+       current_idenitty_type: '<(int) the type of the identity (used for quick failing permissions)>'
+    });
+              
+
 Available Identities
 --------------------
 
@@ -614,11 +625,46 @@ OfferCollection are custom indexes of offers that serve specific use cases. An e
 Uploading Images
 ================
 
+Image upload features allow identities to upload images related to other resources on Knotis.
+
+
 ImageUpload
 -----------
 
+Uploading an image requires a call to KnotisApi.ImageUpload.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.ImageUpload.create({
+        image: '<base64encoded image data>',
+        related_id: '<id guid of the object this is an image of>',
+        name: '<title or caption of the image>',
+        context: '<additional contextual information>'
+    }).then(response => {
+        // The image has been uploaded sucessfully
+    });
+
+After uploading an image the server pushes the image to the Knotis CDN and saves the metadata in our database. The static URI of the uploaded asset can be found in the response data.
+
 ImageReview
 -----------
+
+Even if you do not allow uploading images in your app it is always a good idea to implement a way for identities using your app to flag an image as inapropriate or abusive.
+
+To flag an image for review call KnotisApi.ImageReview.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.ImageReview.create({
+       'image_id': '<id guid of the image to flag>'
+    }).then(response => {
+        // The image has been flagged for review.
+    });
+
+After flagging an image for review it is a good idea to remove the image from the UI of your app and remember the ID so you can avoid rendering it until the image has been removed from Knotis by an administrator.
+ 
 
 Promotional Codes
 =================
