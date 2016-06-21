@@ -15,8 +15,7 @@ Initializing the library is easy. It only requires passing in a simple configura
         api_key: '<your api key>',  //DO NOT SAVE IN YOUR REPOSITORY
         api_secret: '<your api secret>',  //DO NOT SAVE IN YOUR REPOSITORY
         api_root: 'https://knotis.com/api',
-        auth_uri: 'https://knotis.com/oauth2/token',
-        request_timeout: 5000 //optional client side timeout
+        auth_uri: 'https://knotis.com/oauth2/token'
     }
 
 Once you have your configuration object generated initilizing the api is as simple as:
@@ -93,8 +92,8 @@ There are two optional parameters that can be passed into retrieve:
     :linenos:
 
     KnotisApi.SomeResource.retrieve(null, {
-        lat: 47.6062,
-        lng: 122.3321  // These will be passed along in the query string of the URI.
+        param1: 'param1data',
+        param2: 'param2data' // These will be passed along in the query string of the URI.
     }).then(response => {
         // 200 response contains a paginated list of results
 
