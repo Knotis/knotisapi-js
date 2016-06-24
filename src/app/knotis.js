@@ -67,6 +67,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // OfferCollection Resources are Deprecated
         this.OfferCollection = new Resource(
             this, {
                 path: 'offer/collection',
@@ -97,6 +98,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // RedemptionScan Resources are Deprecated
         this.RedemptionScan = new Resource(
             this, {
                 path: 'qrcode/redeem',
@@ -148,6 +150,13 @@ class Knotis extends RestApi {
             }
         );
 
+        this.StripeCustomer.Card = this.StripeCustomerCard;
+
+        this.Stripe = {
+            Customer: this.StripeCustomer,
+            CustomerCard: this.StripeCustomerCard
+        };
+
         this.Search = new Resource(
             this, {
                 path: 'search',
@@ -163,6 +172,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // Passport Resources are Deprecated
         this.Passport = new Resource(
             this, {
                 path: 'passport',
@@ -170,6 +180,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // Passport Resources are Deprecated
         this.Passport.redeem = function(id, page, callback, data) {
             var method = 'PUT';
 
@@ -201,6 +212,7 @@ class Knotis extends RestApi {
             );
         }
 
+        // Passport Resources are Deprecated
         this.Passport.connect = function(id, callback, data) {
             var method = 'PUT';
 
@@ -311,6 +323,25 @@ class Knotis extends RestApi {
             Attachment: this.MessengerAttachment,
             View: this.MessengerView
         };
+
+        this.TagsTag = new Resource(
+            this, {
+                path: 'tags/tag',
+                name: 'tags_tag'
+            }
+        );
+
+        this.TagsToken = new Resource(
+            this, {
+                path: 'tags/token',
+                name: 'tags_token'
+            }
+        );
+
+        this.Tags = {
+            Tag: this.TagsTag,
+            Token: this.TagsToken
+        }
     };
 
     getLocation() {
