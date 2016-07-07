@@ -246,11 +246,16 @@ class Knotis extends RestApi {
             }
         );
 
-        this.DailyReward = {
-            Draw: this.DailyRewardDraw,
-            Skip: this.DailyRewardSkip,
-            Claim: this.DailyRewardClaim
-        };
+        this.DailyReward = new Resource(
+            this, {
+                path: 'rewards/daily',
+                name: 'rewards_daily'
+            }
+        );
+
+        this.DailyReward.Draw = this.DailyRewardDraw;
+        this.DailyReward.Skip = this.DailyRewardSkip;
+        this.DailyReward.Claim = this.DailyRewardClaim;
 
         this.MessengerThread = new Resource(
             this, {
