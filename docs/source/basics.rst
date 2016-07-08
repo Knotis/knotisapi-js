@@ -392,6 +392,62 @@ Daily Reward
 
 The Daily Reward feature gives identities a chance to select 1 offer from a random set of offers per day as a way to incentivize the user to take pictures and redeem offers at participating establishments.
 
+To view all rewards available to be earned call the list() method on the DailyReward resource object.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.DailyReward.list().then(response => {
+        // response object contains list of rewards that can be earned
+        
+    });
+
+An example response looks like this:
+
+.. code-block:: json
+    :linenos:
+
+    {
+        "count": 5,
+        "next": null,
+        "previous": null,
+        "results": [
+            {
+                "id": "f56ecc84-b335-42b5-a9ee-05aec720808a",
+                "offer_type": 2,
+                "title": "$5 credit toward any purchase",
+                "description": null,
+                "restrictions": "$25.00 Minimum Minimum",
+                "start_time": "2016-06-07T12:28:34",
+                "end_time": null,
+                "stock": null,
+                "unlimited": true,
+                "purchased": 40,
+                "redeemed": 0,
+                "published": false,
+                "active": false,
+                "completed": false,
+                "last_purchase": "2016-07-07T23:21:15",
+                "banner_image": {
+                    "url": null,
+                    "id": null
+                },
+                "badge_image": {
+                    "url": null,
+                    "id": null
+                },
+                "tile_image_large": null,
+                "tile_image_small": null,
+                "location": {
+                    "latitude": 47.603871,
+                    "longitude": -122.32942
+                }
+            },
+	    ... additional results sorted by distance
+	]
+    }
+
+
 Draw
 ++++
 
@@ -575,53 +631,6 @@ Create a redemption by calling KnotisApi.Redemption.create().
 
 After redeeming a purchase it will no longer be returned in the results that come from calling KnotisApi.Purchase.retrieve().
 
-Offer/Offers
-------------
-
-Offers
-++++++
-
-The Offers resource exposes all valid and available offers on Knotis. If the offer is valid for purchase it will be listed here by calling retrieve:
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.Offers.retrieve().then(response => {
-        // response contains list of offers that are available for purchase.
-    
-    });
-
-    KnotisApi.Offers.retrieve('<offer_id=guid>').then(response => {
-        // response contains a single offer matching offer_id
-    
-    });
-
-
-Offer
-+++++
-
-The offer resource exposes all offers on Knotis wether they are available for purchase or not. This is useful for showing an identity their expired offers or allowing an identity to view a purchased offer that is no longer available for puchase but can still be redeemed. There is no listing allowed on this resource so only retrieve with an id is supported.
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.Offer.retrieve().then(response => {
-        // response contains list of offers that are available for purchase.
-    
-    });
-
-    KnotisApi.Offer.retrieve('<offer_id=guid>').then(response => {
-        // response contains a single offer matching offer_id
-    
-    });
-
-
-OfferCollection
----------------
-**Pending deprecation**.
-
-OfferCollection are custom indexes of offers that serve specific use cases. An example of an OfferCollection might be "All Offers In Seattle" or "All Resturaunts".
-
 Uploading Images
 ================
 
@@ -710,6 +719,58 @@ Attachment
 
 View
 ----
+
+Offer/Offers
+------------
+
+Offer is a low level financial contract for exchanging goods and currency. These API endpoints are being deprecated in favor of higher level abstractions like Purchases and Rewards.
+
+Offer
++++++
+
+The offer resource exposes all offers on Knotis wether they are available for purchase or not. This is useful for showing an identity their expired offers or allowing an identity to view a purchased offer that is no longer available for puchase but can still be redeemed. There is no listing allowed on this resource so only retrieve with an id is supported.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Offer.retrieve().then(response => {
+        // response contains list of offers that are available for purchase.
+    
+    });
+
+    KnotisApi.Offer.retrieve('<offer_id=guid>').then(response => {
+        // response contains a single offer matching offer_id
+    
+    });
+
+
+Offers
+++++++
+
+**Deprecated**.
+
+The Offers resource exposes all valid and available offers on Knotis. If the offer is valid for purchase it will be listed here by calling retrieve:
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Offers.retrieve().then(response => {
+        // response contains list of offers that are available for purchase.
+    
+    });
+
+    KnotisApi.Offers.retrieve('<offer_id=guid>').then(response => {
+        // response contains a single offer matching offer_id
+    
+    });
+
+
+OfferCollection
+---------------
+
+**Deprecated**.
+
+OfferCollection are custom indexes of offers that serve specific use cases. An example of an OfferCollection might be "All Offers In Seattle" or "All Resturaunts".
 
 Passports
 =========
