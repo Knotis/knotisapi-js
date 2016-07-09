@@ -332,17 +332,20 @@ class Knotis extends RestApi {
         data,
         headers
     ) {
-        if(!data){
-            data = {};
-        }
         var gps = this.getLocation();
         if (gps){
+            if (!data) {
+                data = {};
+
+            }
+
             data.lat = gps.latitude;
             data.lon = gps.longitude;
         }
 
-        // This should only be necessary for auth requests.
-        // data.client_id = this.options.api_key;
+        if(!data){
+            data = null;
+        }
 
         return super.request(
             method,
