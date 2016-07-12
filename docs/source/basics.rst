@@ -673,7 +673,82 @@ To flag an image for review call KnotisApi.ImageReview.create().
     });
 
 After flagging an image for review it is a good idea to remove the image from the UI of your app and remember the ID so you can avoid rendering it until the image has been removed from Knotis by an administrator.
+
+
+Tags
+====
+
+The **Tags** system allows attaching keywords to arbitrary data objects. There are two resources that make up Tags.
+
+Token
+-----
+A Token is a keyword (maybe I should have named this keyword but oh well) that can be attached to an object. To get a paginated list of all tokens call the retrieve method on the Token resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Tags.Token.retrieve().then(response => {
+        //200 response contains a paginated list of token keyword instances.
+
+    });
+
+If you want to create a new Token keyword without attaching it to an object you can call the create method.
+
+.. code-block:: js
+    :linenos:
+
+     KnotisApi.Tags.Token.create({
+         token: 'somekeyword'
+     }).then(response => {
+         // 200 response contains the created token data
+     });
  
+Tag
+---
+
+The Tag resource represents the relationship between a token keyword and another object in the database. A Token can be attached to any object with a primary key or id; even another Tag or Token.
+
+to create a tag call the create() method on the Tag resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Tags.Tag.create({
+        token: 'somekeyword',
+	related: '<id/primary_key of the object to be tagged>'
+    }).then(response => {
+        // 200 response contains created tag fields.
+
+    });
+
+There is no need to first create a token as this operation will automatically create the internal Token object if one doesn't already exists for this keyword.
+
+Retreiving tags and tagged instances can be achieved by calling retrieve() on the Tag resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Tags.Tag.retrieve(null, {
+        token: 'somekeyword'
+    }).then(response => {
+        // 200 response contains paginated list of objects tagged with "somekeyword".
+
+    });
+
+The inverse of this operation is getting all of the tags that have been attached to an object.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Tags.Tag.retrieve(null, {
+        related: '27d92c4a-149f-4096-8fbb-ea9e8c899275'
+    }).then(response => {
+        // 200 response contains paginated list of tags related to the object id.
+
+    });
+
+Note: Setting both token and related will always return 1 result as this combination is unique for each tag.
+
 
 Promotional Codes
 =================
