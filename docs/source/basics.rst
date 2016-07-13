@@ -397,7 +397,7 @@ To view all rewards available to be earned call the list() method on the DailyRe
 .. code-block:: js
     :linenos:
 
-    KnotisApi.DailyReward.list().then(response => {
+    KnotisApi.DailyReward.retrieve().then(response => {
         // response object contains list of rewards that can be earned
         
     });
