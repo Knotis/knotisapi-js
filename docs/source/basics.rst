@@ -749,27 +749,25 @@ The inverse of this operation is getting all of the tags that have been attached
 
 Note: Setting both token and related will always return 1 result as this combination is unique for each tag.
 
-
-Promotional Codes
-=================
-
-Search
+Quests
 ======
 
-QR Codes
-========
+Quests allow conditions to be defined as key/value pairs and verification that these conditions have been met and executing business logic upon completion. Quest work similarly to how quests work in a video role-playing game or missions in a first-person shooter.
 
-RedemptionScan
---------------
+Quest
+-----
 
-Stripe
-======
+Quests are defined by collections of checks.
 
-StripeCustomer
---------------
+Active
+------
 
-StripeCustomerCard
-------------------
+Active quests are quests that the user can currently work towards completing checks. This is the primary.
+
+Completed
+---------
+
+Completed quests are quests the user has already completed.
 
 Messenger
 =========
@@ -794,6 +792,27 @@ Attachment
 
 View
 ----
+
+Promotional Codes
+=================
+
+Search
+======
+
+QR Codes
+========
+
+RedemptionScan
+--------------
+
+Stripe
+======
+
+StripeCustomer
+--------------
+
+StripeCustomerCard
+------------------
 
 Offer/Offers
 ------------

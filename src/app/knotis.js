@@ -5,7 +5,7 @@ import {
     Resource
 } from 'librestapi';
 
-import Promise from 'promise';
+import Promise from 'es6-promise';
 import extend from 'node.extend';
 
 class Knotis extends RestApi {
@@ -347,6 +347,28 @@ class Knotis extends RestApi {
             Tag: this.TagsTag,
             Token: this.TagsToken
         }
+
+        this.Quests = {
+            Quest: new Resource(
+                this, {
+                    path: 'quests/quest',
+                    name: 'quests_quest'
+                }
+            ),
+            Active: new Resource(
+                this, {
+                    path: 'quests/active',
+                    name: 'quests_active'
+                }
+            ),
+            Completed: new Resource(
+                this, {
+                    path: 'quests/completed',
+                    name: 'quests_completed'
+                }
+            )
+        };
+        
     };
 
     getLocation() {
