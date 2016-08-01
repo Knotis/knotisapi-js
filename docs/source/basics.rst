@@ -757,17 +757,89 @@ Quests allow conditions to be defined as key/value pairs and verification that t
 Quest
 -----
 
-Quests are defined by collections of checks.
+Quests that are available for a user to activate/accept are retrieved by making a retreive request to the Quests.Quest resource.
 
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Quests.Quest.retrieve().then(response => {
+        // 200 response contains paginated list of available quests.
+
+    });
+    
 Active
 ------
 
-Active quests are quests that the user can currently work towards completing checks. This is the primary.
+Active quests are quests that the user can currently work towards completing checks.
 
+retrieving a users currently active quests is similar to retrieving available quests only using the Active resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Quests.Active.retrieve().then(response => {
+        // 200 response contains paginated list of the current identity's active quests.
+
+    });
+
+
+To activate a quest for an identity you call the create method on the Active resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Quests.Active.create({
+        quest: '<The ID for the Quest to accept (GUID)>'
+    }).then(response => {
+        // 200 response contains a JSON object representing the newly accepted quest.
+
+    });
+
+Some quests require additional information to be collected for the Quest Checks to pass. This information is stored on the Active quest model. Update it by calling the update method on the active resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Quests.Active.update('<The ID for the Active quest to update (GUID)>', {
+        param1: 'Arbitrary value 1',
+	param2: 'Arbitrary value 2'
+    }).then(response => {
+        // 200 response contains the updated JSON object representing the accepted quest.
+
+    });
+
+    
 Completed
 ---------
 
 Completed quests are quests the user has already completed.
+
+retrieving a users Completed quests is similar to retrieving active quests only using the Completed resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Quests.Completed.retrieve().then(response => {
+        // 200 response contains paginated list of the current identity's completed quests.
+
+    });
+
+To attempt to complete a quest for an identity you call the create method on the Completed resource. Attempting to create a completed quest object is not guaranteed to succed. If all the conditions of the quest are not meet a 5XX response will be returned indicating that the checks did not pass.
+
+**NOTE**: You must pass in the ID for the quest; not the id for the active quest object.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Quests.Completed.create({
+        quest: '<The ID for the Quest to complete (GUID)>'
+    }).then(response => {
+        // 200 response contains a JSON object representing the newly accepted quest.
+        // 500 response means quest completion checks failed.
+
+    });
+
 
 Messenger
 =========
