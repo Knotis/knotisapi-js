@@ -47,6 +47,6 @@
 	"webpack": "^1.13.1"
     },
     "dependencies": {
-	"librestapi": "^0.3.4"
+	"librestapi": "=0.2.4"
     }
 }

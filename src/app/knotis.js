@@ -5,7 +5,7 @@ import {
     Resource
 } from 'librestapi';
 
-import Promise from 'es6-promise';
+import Promise from 'promise';
 import extend from 'node.extend';
 
 class Knotis extends RestApi {
