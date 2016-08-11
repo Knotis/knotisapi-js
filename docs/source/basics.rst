@@ -178,7 +178,7 @@ If there is no matching user/password combination the current behavior is to cre
 User Information
 ----------------
 
-After a user is authenticated it is helpful to know some additional information about the user. You can retrieve some basic information by calling the retrieve method User resource.
+After a user is authenticated it is helpful to know some additional information about the user. You can list some basic information by calling the retrieve method User resource.
 
 .. code-block:: js
     :linenos:
@@ -844,26 +844,172 @@ To attempt to complete a quest for an identity you call the create method on the
 Messenger
 =========
 
+Messenger is the system that handles internal communications such as notifications and chat. Messenger functionality is divided into seven (7) resources. 
+
 Thread
 ---------------
+
+The core of messenging is the Thread. Threads can be thought of like IRC #channels or even an email thread.
+
+To create a thread you make a call to Messenger.Thread.create()
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Thread.create({
+        participants: [<Identity ID GUID 0>,<Identity ID GUID 1>, ...]
+    }).then(response => {
+        // 200 response contains a JSON object representing the newly created thread.
+        // 500 response means something bad happened.
+
+    });
 
 Message
 ----------------
 
+To send a message you must first have an "id" for a Thread that has been created. Pass the "id" of the thread to the Messenger.Message.create() method.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Message.create({
+        thread: '<id of the thread to send this message to>',
+	content: 'The text of the message.',
+	sender: '<id of the sending Identity>,
+	attachments: ['<File URI to attach0>', '<File URI to attach1>', ...]
+    }).then(response => {
+        // 200 response contains a JSON object representing the newly created message.
+
+    });
+
+NOTE: The **attachments** field is optional.
+
+You can list all of an identity/participant's  messages sorted by creation time by calling Messenger.Message.retrieve(). You can also filter messages by Thread id.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Message.retrieve(
+        null, {
+            thread: '<id of the thread to send this message to>'
+	}
+    ).then(response => {
+        // 200 response contains a JSON object representing the newly created thread.
+        // 500 response means quest completion checks failed.
+
+    });
+
 Read
 ++++
+
+If you only want to see read messages use the Messenger.Message.Read.retrieve() method.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Message.Read.retrieve(
+        null, {
+            thread: '<id of the thread to send this message to>'
+	}
+    ).then(response => {
+        // 200 response contains a JSON object representing the newly created thread.
+        // 500 response means quest completion checks failed.
+
+    });
 
 Unread
 ++++++
 
+If you only want to see unread messages use the Messenger.Message.Unread.retrieve() method.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Message.Unread.retrieve(
+        null, {
+            thread: '<id of the thread to send this message to>'
+        }
+    ).then(response => {
+        // 200 response contains a JSON object representing the newly created thread.
+        // 500 response means quest completion checks failed.
+
+    });
+
 Participant
 --------------------
+
+Sometimes you might want to render the other participants that are active in a thread. To do this you can call Messenger.Participant.retrieve()
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Participant.retrieve(
+        null, {
+            thread: '<id of the thread to retrieve participants for.>'
+        }
+    ).then(response => {
+        // 200 response contains a JSON array of the participants.
+
+    });
+
+If you already created a thread you can add an additional participant to it by calling Messenger.Participant.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Participant.create({
+        thread: '<id of the thread to add the participant to.>',
+	identity: '<id of the Identity to be added to the thread.>'
+    }).then(response => {
+        // 200 response contains a JSON object of the created participant.
+
+    });
+
+To remove a participant from a Thread call Messenger.Participant.delete().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.Participant.delete('<ID GUID of the Identity to remove from the thread>').then(response => {
+        // 200 response contains an OK.
+
+    });
+
+View
+----
+
+The View resource provides tracking for whether a message has been viewed and how many times. It is up to the client to determine what qualifies as a View.
+
+To create a view call Messenger.View.create()
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.View.create({
+        viewer: '<id of the Identity that has viewd the message.>',
+	message: '<id of the Message that was viewed.>'
+    }).then(response => {
+        // 200 response contains a JSON object of the view metadata.
+
+    });
 
 Attachment
 ----------
 
-View
-----
+Attachments are simply URI strings that represent an external resource. This can be a dropbox uri or the uri of an image that was uploaded to Knotis. Currently only rendering images is supported.
+
+To create an attachment call Messenger.Attachment.create().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Messenger.View.create({
+        message: '<id of the Message to attach the file.>',
+	file_uri: '<URI of the file to attach>'
+    }).then(response => {
+        // 200 response contains a JSON object of the attachment metadata.
+
+    });
 
 Promotional Codes
 =================
@@ -894,13 +1040,13 @@ Offer is a low level financial contract for exchanging goods and currency. These
 Offer
 +++++
 
-The offer resource exposes all offers on Knotis wether they are available for purchase or not. This is useful for showing an identity their expired offers or allowing an identity to view a purchased offer that is no longer available for puchase but can still be redeemed. There is no listing allowed on this resource so only retrieve with an id is supported.
+The offer resource exposes all offers on Knotis wether they are available for purchase or not. This is useful for showing an identity their expired offers or allowing an identity to view a purchased offer that is no longer available for puchase but can still be redeemed. There is no retrieveing allowed on this resource so only retrieve with an id is supported.
 
 .. code-block:: js
     :linenos:
 
     KnotisApi.Offer.retrieve().then(response => {
-        // response contains list of offers that are available for purchase.
+        // response contains retrieve of offers that are available for purchase.
     
     });
 
@@ -915,7 +1061,7 @@ Offers
 
 **Deprecated**.
 
-The Offers resource exposes all valid and available offers on Knotis. If the offer is valid for purchase it will be listed here by calling retrieve:
+The Offers resource exposes all valid and available offers on Knotis. If the offer is valid for purchase it will be retrieveed here by calling retrieve:
 
 .. code-block:: js
     :linenos:
