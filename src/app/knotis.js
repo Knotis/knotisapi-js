@@ -5,7 +5,6 @@ import {
     Resource
 } from 'librestapi';
 
-import Promise from 'promise';
 import extend from 'node.extend';
 
 class Knotis extends RestApi {
@@ -260,8 +259,8 @@ class Knotis extends RestApi {
 
         this.DailyReward = new Resource(
             this, {
-                path: 'rewards/daily',
-                name: 'rewards_daily'
+                path: 'rewards',
+                name: 'reward'
             }
         );
 
