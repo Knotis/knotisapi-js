@@ -1,7 +1,7 @@
 var webpack = require('webpack'),
     path = require('path'),
     libraryName = 'knotisapi',
-    target, libraryTarget,
+    target, libraryTarget = 'umd',
     outputFile = libraryName + '.js',
     env = process.env.WEBPACK_ENV,
     entry = __dirname + '/src/index.js',
@@ -10,14 +10,16 @@ var webpack = require('webpack'),
 
 if (env === 'web') {
     plugins.push(new UglifyJsPlugin({ minimize: true }));
+    plugins.push(new webpack.ProvidePlugin({
+        'Promise': 'imports?this=>global!exports?global.Promise!es6-promise',
+        'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    }));
     outputFile = libraryName + '.min.js';
-    libraryTarget = 'var';
     target = 'web';
 
 } else {
     outputFile = libraryName + '.js';
     entry = __dirname + '/src/index.js';
-    libraryTarget = 'umd';
     target = 'node';
 
 }
@@ -44,6 +46,10 @@ var config = {
                 test: /\.js$/,
                 loader: "eslint-loader",
                 exclude: /node_modules/
+            },
+            {
+                test: /\.json$/,
+                loader: 'json'
             }
         ]
     },
