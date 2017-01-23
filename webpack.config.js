@@ -10,10 +10,6 @@ var webpack = require('webpack'),
 
 if (env === 'web') {
     plugins.push(new UglifyJsPlugin({ minimize: true }));
-    plugins.push(new webpack.ProvidePlugin({
-        'Promise': 'imports?this=>global!exports?global.Promise!es6-promise',
-        'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-    }));
     outputFile = libraryName + '.min.js';
     target = 'web';
 
