@@ -18,6 +18,15 @@ class Knotis extends RestApi {
             }
         );
 
+        this.UserImageHistory = new Resource(
+            this, {
+                path: 'media/image',
+                name: 'user_image_history'
+            }
+        );
+
+        this.User.ImageHistory = this.UserImageHistory;
+
         this.NewUser = new Resource(
             this, {
                 path: 'auth/new',
@@ -236,6 +245,7 @@ class Knotis extends RestApi {
             );
         };
 
+        // Daily Reward Resources are Deprecated
         this.DailyRewardDraw = new Resource(
             this, {
                 path: 'rewards/daily',
@@ -243,6 +253,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // Daily Reward Resources are Deprecated
         this.DailyRewardSkip = new Resource(
             this, {
                 path: 'rewards/daily/skip',
@@ -250,6 +261,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // Daily Reward Resources are Deprecated
         this.DailyRewardClaim = new Resource(
             this, {
                 path: 'rewards/daily/claim',
@@ -257,6 +269,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // Daily Reward Resources are Deprecated
         this.DailyReward = new Resource(
             this, {
                 path: 'rewards',
@@ -264,6 +277,7 @@ class Knotis extends RestApi {
             }
         );
 
+        // Daily Reward Resources are Deprecated
         this.DailyReward.Draw = this.DailyRewardDraw;
         this.DailyReward.Skip = this.DailyRewardSkip;
         this.DailyReward.Claim = this.DailyRewardClaim;
@@ -367,7 +381,6 @@ class Knotis extends RestApi {
                 }
             )
         };
-        
     };
 
     getLocation() {
@@ -388,7 +401,6 @@ class Knotis extends RestApi {
         if (gps){
             if (!data) {
                 data = {};
-
             }
 
             data.lat = gps.latitude;
