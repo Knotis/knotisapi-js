@@ -425,6 +425,25 @@ class Knotis extends RestApi {
         );
     };
 
+    authenticate(credentials) {
+        let method = 'POST';
+        let uri = this.options.auth_uri;
+
+        // Force application/x-www-form-urlencoded because
+        // our OAUTH2 endpoint doens't support JSON.
+        let headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        };
+        
+        return this.request(
+            method,
+            uri,
+            credentials,
+            headers
+        );
+
+    };
+
     passwordGrant(
         username,
         password
