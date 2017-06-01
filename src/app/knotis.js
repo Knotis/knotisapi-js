@@ -380,13 +380,20 @@ class Knotis extends RestApi {
                     name: 'quests_completed'
                 }
             ),
-	    Tutorial: new Resource(
-		this, {
-		    path: 'quests/tutorial',
-		    name: 'quests_tutorial'
-		}
+            Tutorial: new Resource(
+                this, {
+                    path: 'quests/tutorial',
+                    name: 'quests_tutorial'
+                }
             )
         };
+
+        this.Endpoint = new Resource(
+            this, {
+                path: 'endpoint',
+                name: 'endpoint'
+            }
+        );
     };
 
     getLocation() {
@@ -434,14 +441,13 @@ class Knotis extends RestApi {
         let headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
         };
-        
+
         return this.request(
             method,
             uri,
             credentials,
             headers
         );
-
     };
 
     passwordGrant(
