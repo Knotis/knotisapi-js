@@ -25,7 +25,16 @@ class Knotis extends RestApi {
             }
         );
 
+        this.OneUseToken = new Resource(
+            this, {
+                path: 'auth/onetimeusetoken',
+                name: 'one_use_token',
+                auth_required: false
+            }
+        );
+
         this.User.ImageHistory = this.Image;
+        this.User.OneUseToken = this.OneUseToken;
 
         this.NewUser = new Resource(
             this, {
@@ -418,6 +427,17 @@ class Knotis extends RestApi {
 
             data.lat = gps.latitude;
             data.lon = gps.longitude;
+        }
+
+        if (
+            'undefined' !== typeof data &&
+            'undefined' !== typeof data.loc_bypass &&
+            data.loc_bypass &&
+            data.loc_bypass.lat &&
+            data.loc_bypass.lon
+        ) {
+            data.lat = data.loc_bypass.lat;
+            data.lon = data.loc_bypass.lon;
         }
 
         if(!data){
