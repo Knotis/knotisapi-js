@@ -50,6 +50,6 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "librestapi": "^0.4.0"
+    "librestapi": "^2.0.0"
   }
 }
