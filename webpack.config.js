@@ -20,7 +20,6 @@ if (env === 'web') {
 
 }
 
-
 var config = {
     entry: entry,
     devtool: 'source-map',
