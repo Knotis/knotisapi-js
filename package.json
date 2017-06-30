@@ -1,6 +1,6 @@
 {
   "name": "knotisapi",
-  "version": "1.4.9",
+  "version": "1.4.10",
   "description": "Javascript library for accessing the Knotis REST API.",
   "main": "dist/index.js",
   "scripts": {
@@ -50,6 +50,6 @@
     "webpack": "^1.13.1"
   },
   "dependencies": {
-    "librestapi": "^2.0.2"
+    "librestapi": "^2.0.3"
   }
 }
