@@ -400,7 +400,8 @@ class Knotis extends RestApi {
         this.Endpoint = new Resource(
             this, {
                 path: 'endpoint',
-                name: 'endpoint'
+                name: 'endpoint',
+                api_version: 'v1'
             }
         );
     };
