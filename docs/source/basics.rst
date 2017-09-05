@@ -377,189 +377,10 @@ To get a paginated list of Establishments call retrieve():
         ]
     }
         
-Business
---------
-
-Businesses are collections of establishments. A business may have one or more establishments that are managed by managers of the business.
-
 Rewards
 =======
 
 Knotis provides several ways to interact with rewards and promotions and reward them to identies.
-
-Daily Reward
-------------
-
-The Daily Reward feature gives identities a chance to select 1 offer from a random set of offers per day as a way to incentivize the user to take pictures and redeem offers at participating establishments.
-
-To view all rewards available to be earned call the list() method on the DailyReward resource object.
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.DailyReward.retrieve().then(response => {
-        // response object contains list of rewards that can be earned
-        
-    });
-
-An example response looks like this:
-
-.. code-block:: json
-    :linenos:
-
-    {
-        "count": 5,
-        "next": null,
-        "previous": null,
-        "results": [
-            {
-                "id": "f56ecc84-b335-42b5-a9ee-05aec720808a",
-                "offer_type": 2,
-                "title": "$5 credit toward any purchase",
-                "description": null,
-                "restrictions": "$25.00 Minimum Minimum",
-                "start_time": "2016-06-07T12:28:34",
-                "end_time": null,
-                "stock": null,
-                "unlimited": true,
-                "purchased": 40,
-                "redeemed": 0,
-                "published": false,
-                "active": false,
-                "completed": false,
-                "last_purchase": "2016-07-07T23:21:15",
-                "banner_image": {
-                    "url": null,
-                    "id": null
-                },
-                "badge_image": {
-                    "url": null,
-                    "id": null
-                },
-                "tile_image_large": null,
-                "tile_image_small": null,
-                "location": {
-                    "latitude": 47.603871,
-                    "longitude": -122.32942
-                }
-            },
-	    ... additional results sorted by distance
-	]
-    }
-
-
-Draw
-++++
-
-Drawing a list of offers can be done by calling retrieve on the KnotisApi.DailyReward.Draw resource.
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.DailyReward.Draw.retrieve().then(response => {
-        // response object contains list of offers to draw from.
-
-    });
-
-
-.. code-block:: json
-    :linenos:
-
-    {
-        "rewards":[
-            {
-                "id":"8e52e8ca-6ccc-40b0-9317-f3eff3f9c4ae",
-                "owner":{
-                    "id":"6ed25ef6-a364-496d-a7ce-4b2a13d92aa1",
-                    "identity_type":2,
-                    "name":"Apple Store University Village",
-                    "backend_name":"apple-store-university-village",
-                    "description":"",
-                    "available":true,
-                    "badge_image":null,
-                    "banner_image":{
-                        "url":"https://stage-aws-cloud.knotis.net/media/cache/f6/67/f6673775e6dcec3c7c4f7e5eb487063d.jpg",
-                        "pub_date":"2016-06-07T11:59:24.876000",
-                        "id":"343a1209-395a-40ff-9022-c13930cba000"
-                    },
-                    "tile_image_large":"https://stage-aws-cloud.knotis.net/media/cache/20/af/20af7094868b9ef1c8caae50974466e3.jpg",
-                    "tile_image_small":"https://stage-aws-cloud.knotis.net/media/cache/be/1c/be1cedd13fd6324011011ac4784d8e60.jpg",
-                    "location":{
-                        "latitude":47.664168,
-                        "longitude":-122.305423,
-                        "address":"4702 NE University Village Pl Seattle WA 98105"
-                    },
-                    "carousel_images":[{
-                        "url":"https://stage-aws-cloud.knotis.net/media/cache/f6/67/f6673775e6dcec3c7c4f7e5eb487063d.jpg",
-                        "pub_date":"2016-06-07T11:59:24.876000",
-                        "id":"343a1209-395a-40ff-9022-c13930cba000"
-                    }]
-                },
-                "offer_type":2,
-                "title":"$5 credit toward any purchase",
-                "description":null,
-                "restrictions":"$25.00 Minimum Minimum",
-                "start_time":"2016-06-07T12:28:35.128000",
-                "end_time":null,
-                "stock":null,
-                "unlimited":true,
-                "purchased":26,
-                "redeemed":0,
-                "published":false,
-                "active":false,
-                "completed":false,
-                "last_purchase":"2016-06-16T22:08:43.167000",
-                "price":5.0,
-                "price_retail":5.0,
-                "banner_image":{
-                    "url":"https://stage-aws-cloud.knotis.net/media/cache/35/a2/35a24ea1bef8b69c335c6ec8c0abd6e8.jpg",
-                    "pub_date":"2016-06-07T13:11:42.666000",
-                    "id":"57557bfb-e297-4224-8284-c514400cac6d"
-                },
-                "badge_image":null,
-                "tile_image_large":"https://stage-aws-cloud.knotis.nethttps://stage-aws-cloud.knotis.net/media/cache/09/83/0983357dc3317738894464243c92ca7e.jpg",
-                "tile_image_small":"https://stage-aws-cloud.knotis.nethttps://stage-aws-cloud.knotis.net/media/cache/25/76/257669b52487275c665c413ef7cfff7e.jpg",
-                "location":null
-            },
-            ... additional offers.
-        ],
-        "actions_remaining":3,
-        "last_action_time":"0001-01-01T00:00:00"
-    }
-
-Skip
-++++
-
-If an identity is not interested in a reward they can skip it to have a chance to view another one. Skip a reward by calling KnotisApi.DailyReward.Skip.create().
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.DailyReward.Skip.create({
-        offer: '<reward_id=guid>'
-    }).then(response => {
-        // response contains info about the skip
-    
-    });
-
-The response data contains information about the skip.
-               
-Claim
-+++++
-
-If the identity is interested in claiming a daily reward they call KnotisApi.DailyReward.Claim.create().
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.DailyReward.Claim.create({
-        offer: '<reward_id=guid>'
-    }).then(response => {
-        // response contains info about the claim.
-    
-    });
-
-The response data contains information about the claimed offer.
 
 Purchase
 --------
@@ -631,14 +452,17 @@ Create a redemption by calling KnotisApi.Redemption.create().
 
 After redeeming a purchase it will no longer be returned in the results that come from calling KnotisApi.Purchase.retrieve().
 
-Uploading Images
-================
+Media
+=====
+
+Images
+------
 
 Image upload features allow identities to upload images related to other resources on Knotis.
 
 
-ImageUpload
------------
+Uploading Images
+++++++++++++++++
 
 Uploading an image requires a call to KnotisApi.ImageUpload.create().
 
@@ -656,24 +480,8 @@ Uploading an image requires a call to KnotisApi.ImageUpload.create().
 
 After uploading an image the server pushes the image to the Knotis CDN and saves the metadata in our database. The static URI of the uploaded asset can be found in the response data.
 
-ImageReview
------------
-
-Even if you do not allow uploading images in your app it is always a good idea to implement a way for identities using your app to flag an image as inapropriate or abusive.
-
-To flag an image for review call KnotisApi.ImageReview.create().
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.ImageReview.create({
-       'image_id': '<id guid of the image to flag>'
-    }).then(response => {
-        // The image has been flagged for review.
-    });
-
-After flagging an image for review it is a good idea to remove the image from the UI of your app and remember the ID so you can avoid rendering it until the image has been removed from Knotis by an administrator.
-
+Retrieving User Images
+++++++++++++++++++++++
 
 Tags
 ====
@@ -1011,81 +819,14 @@ To create an attachment call Messenger.Attachment.create().
 
     });
 
-Promotional Codes
-=================
-
 Search
 ======
+
+Promotional Codes
+=================
 
 QR Codes
 ========
 
 RedemptionScan
 --------------
-
-Stripe
-======
-
-StripeCustomer
---------------
-
-StripeCustomerCard
-------------------
-
-Offer/Offers
-------------
-
-Offer is a low level financial contract for exchanging goods and currency. These API endpoints are being deprecated in favor of higher level abstractions like Purchases and Rewards.
-
-Offer
-+++++
-
-The offer resource exposes all offers on Knotis wether they are available for purchase or not. This is useful for showing an identity their expired offers or allowing an identity to view a purchased offer that is no longer available for puchase but can still be redeemed. There is no retrieveing allowed on this resource so only retrieve with an id is supported.
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.Offer.retrieve().then(response => {
-        // response contains retrieve of offers that are available for purchase.
-    
-    });
-
-    KnotisApi.Offer.retrieve('<offer_id=guid>').then(response => {
-        // response contains a single offer matching offer_id
-    
-    });
-
-
-Offers
-++++++
-
-**Deprecated**.
-
-The Offers resource exposes all valid and available offers on Knotis. If the offer is valid for purchase it will be retrieveed here by calling retrieve:
-
-.. code-block:: js
-    :linenos:
-
-    KnotisApi.Offers.retrieve().then(response => {
-        // response contains list of offers that are available for purchase.
-    
-    });
-
-    KnotisApi.Offers.retrieve('<offer_id=guid>').then(response => {
-        // response contains a single offer matching offer_id
-    
-    });
-
-
-OfferCollection
----------------
-
-**Deprecated**.
-
-OfferCollection are custom indexes of offers that serve specific use cases. An example of an OfferCollection might be "All Offers In Seattle" or "All Resturaunts".
-
-Passports
-=========
-
-**Deprecated**.
-
