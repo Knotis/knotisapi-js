@@ -174,6 +174,23 @@ This is all handled internally by the library and will be added to all requests 
 
 If there is no matching user/password combination the current behavior is to create an authentication object for that username/password and proceed with authentication.
 
+One Time Use Tokens
+-------------------
+
+One time use tokens are temporary passwords that can be generated for users. In order to create a one-time use token make a create call on the OneUseToken resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.OneUseToken.create({
+        email: 'someone@example.com'
+    }).then(response => {
+       // response will indicate success or failure.
+    });
+
+Once the temporary password is created it will be sent to the email address passed into the create method. The password will never be returned through the api. Only a person who controls the specified email address should be able to access the temporary password.
+
+The temoporary password can be used to authenticate the user using the password_grant authentication grant type.
 
 User Information
 ----------------
@@ -480,8 +497,19 @@ Uploading an image requires a call to KnotisApi.ImageUpload.create().
 
 After uploading an image the server pushes the image to the Knotis CDN and saves the metadata in our database. The static URI of the uploaded asset can be found in the response data.
 
-Retrieving User Images
+Listing User Images
 ++++++++++++++++++++++
+
+Listing images that belong to the current identity is achieved by making a retrieve call on the Image resource.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Image.retrieve().then(response => {
+       // response contains a list of images.
+    });
+
+This request only lists images where the current identity is the owner. It returns an empty list if no images are avaialable.
 
 Tags
 ====
@@ -648,6 +676,36 @@ To attempt to complete a quest for an identity you call the create method on the
 
     });
 
+Search
+======
+
+A search query can be executed against all establishments based on the name of the business. The parameter "q" is used to pass the query content.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Search.retrieve(null, {
+        q: 'search query'
+    }).then(response => {
+       // response contains a list of establishments that match 'search query'
+    });
+
+Promotional Codes
+=================
+
+Knotis supports string based promotional codes to be redemed through the api.
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.PromoCode.create({
+        promo_code: '12345abc'
+    }).then(response => {
+       // Response contains confirmation that the promocode was executed sucessfully.
+       
+    });
+
+Due to the arbitrary nature of promo codes the responses can vary. However they should return id's to any resources created as a side effect of executing this promo code.
 
 Messenger
 =========
@@ -655,7 +713,7 @@ Messenger
 Messenger is the system that handles internal communications such as notifications and chat. Messenger functionality is divided into seven (7) resources. 
 
 Thread
----------------
+------
 
 The core of messenging is the Thread. Threads can be thought of like IRC #channels or even an email thread.
 
@@ -673,7 +731,7 @@ To create a thread you make a call to Messenger.Thread.create()
     });
 
 Message
-----------------
+-------
 
 To send a message you must first have an "id" for a Thread that has been created. Pass the "id" of the thread to the Messenger.Message.create() method.
 
@@ -818,15 +876,3 @@ To create an attachment call Messenger.Attachment.create().
         // 200 response contains a JSON object of the attachment metadata.
 
     });
-
-Search
-======
-
-Promotional Codes
-=================
-
-QR Codes
-========
-
-RedemptionScan
---------------
