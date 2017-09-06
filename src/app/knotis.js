@@ -153,27 +153,6 @@ class Knotis extends RestApi {
             }
         );
 
-        this.StripeCustomer = new Resource(
-            this, {
-                path: 'stripe/customer',
-                name: 'stripe_customer'
-            }
-        );
-
-        this.StripeCustomerCard = new Resource(
-            this, {
-                path: 'stripe/customer/card',
-                name: 'stripe_customer_card'
-            }
-        );
-
-        this.StripeCustomer.Card = this.StripeCustomerCard;
-
-        this.Stripe = {
-            Customer: this.StripeCustomer,
-            CustomerCard: this.StripeCustomerCard
-        };
-
         this.Search = new Resource(
             this, {
                 path: 'search',
@@ -188,108 +167,6 @@ class Knotis extends RestApi {
                 name: 'promocode_redeem'
             }
         );
-
-        // Passport Resources are Deprecated
-        this.Passport = new Resource(
-            this, {
-                path: 'passport',
-                name: 'passport'
-            }
-        );
-
-        // Passport Resources are Deprecated
-        this.Passport.redeem = function(id, page, callback, data) {
-            var method = 'PUT';
-
-            if (null === id) {
-                throw 'Passport.redeem method requires id parameter.';
-
-            }
-
-            if (null === page) {
-                throw 'Passport.redeem method requires page parameter.';
-
-            }
-
-            var uri = [
-                this.api.options.api_root,
-                this.options.api_version,
-                this.options.path,
-                id,
-                page,
-                'redeem',
-                ''
-            ].join('/');
-
-            this.request(
-                method,
-                uri,
-                callback,
-                data
-            );
-        }
-
-        // Passport Resources are Deprecated
-        this.Passport.connect = function(id, callback, data) {
-            var method = 'PUT';
-
-            if (null === id) {
-                throw 'RestResource.connect method requires id parameter.';
-            }
-
-            var uri = [
-                this.api.options.api_root,
-                this.options.api_version,
-                this.options.path,
-                id,
-                'connect',
-                ''
-            ].join('/');
-
-            this.request(
-                method,
-                uri,
-                callback,
-                data
-            );
-        };
-
-        // Daily Reward Resources are Deprecated
-        this.DailyRewardDraw = new Resource(
-            this, {
-                path: 'rewards/daily',
-                name: 'rewards_daily'
-            }
-        );
-
-        // Daily Reward Resources are Deprecated
-        this.DailyRewardSkip = new Resource(
-            this, {
-                path: 'rewards/daily/skip',
-                name: 'rewards_daily_skip'
-            }
-        );
-
-        // Daily Reward Resources are Deprecated
-        this.DailyRewardClaim = new Resource(
-            this, {
-                path: 'rewards/daily/claim',
-                name: 'rewards_daily_claim'
-            }
-        );
-
-        // Daily Reward Resources are Deprecated
-        this.DailyReward = new Resource(
-            this, {
-                path: 'rewards',
-                name: 'reward'
-            }
-        );
-
-        // Daily Reward Resources are Deprecated
-        this.DailyReward.Draw = this.DailyRewardDraw;
-        this.DailyReward.Skip = this.DailyRewardSkip;
-        this.DailyReward.Claim = this.DailyRewardClaim;
 
         this.MessengerThread = new Resource(
             this, {
@@ -516,9 +393,13 @@ class Knotis extends RestApi {
                     return;
 
                 });
+
             });
+
         });
+
     }
+
 }
 
 export default Knotis;
