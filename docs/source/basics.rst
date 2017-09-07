@@ -313,8 +313,8 @@ Creating new users is handled by calling create on the NewUser resource:
     :linenos:
 
     KnotisApi.NewUser.create({
-        email: '<email of user you want to reset>',
-        password: '<user's requested password>'
+        username: '<username of the new user (could be an email or guid)>',
+        password: '<user's requested password or an unusable one>'
     }).then(response => {
         // Response contains user and identity information
 
