@@ -12,10 +12,10 @@ Initializing the library is easy. It only requires passing in a simple configura
     :linenos:
 
     let options = {
-        api_key: '<your api key>',  //DO NOT SAVE IN YOUR REPOSITORY
-        api_secret: '<your api secret>',  //DO NOT SAVE IN YOUR REPOSITORY
-        api_root: 'https://knotis.com/api',
-        auth_uri: 'https://knotis.com/oauth2/token'
+        api_key: '<your api key>',  // DO NOT SAVE IN YOUR REPOSITORY
+        api_secret: '<your api secret>',  // DO NOT SAVE IN YOUR REPOSITORY
+        api_root: 'https://knotis.com/api',  // NO TRAILING SLASH!
+        auth_uri: 'https://knotis.com/oauth2/token/'  // TRAILING SLASH REQUIRED HERE!!!
     }
 
 Once you have your configuration object generated initilizing the api is as simple as:
