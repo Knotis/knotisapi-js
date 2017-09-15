@@ -18,7 +18,7 @@ Initializing the library is easy. It only requires passing in a simple configura
         auth_uri: 'https://knotis.com/oauth2/token/'  // TRAILING SLASH REQUIRED HERE!!!
     }
 
-Once you have your configuration object generated initilizing the api is as simple as:
+Once you have your configuration object generated initializing the api is as simple as:
 
 .. code-block:: js
     :linenos:
@@ -42,7 +42,7 @@ create
 
 The create method submits a HTTP **POST** request to the endpoint defined by the resource. As the name implies it's intended to create the data required to generate a new resource instance.
 
-The create method takes one parameter: *data*, which is a Javascript object containing the fields to submit with the POST.
+The create method takes one parameter: *data*, which is a JavaScript object containing the fields to submit with the POST.
 
 .. code-block:: js
     :linenos:
@@ -86,7 +86,7 @@ The retrieve method submits a HTTP **GET** request to the endpoint defined by th
 There are two optional parameters that can be passed into retrieve:
 
 * *id*: this is the identifier (usually a GUID) of the specific resource you want to retrieve. if no id is passed then a paginated list of available resource instances will be returned in the response.
-* *data*: this is a Javascript object containing parameters that will be added to the query string.
+* *data*: this is a JavaScript object containing parameters that will be added to the query string.
 
 .. code-block:: js
     :linenos:
@@ -109,7 +109,7 @@ Finally the destoy method submits a HTTP **DELETE** request to the endpoint defi
 
 There is one required parameter:
 
-* *id*: this is the identifier (usually a GUID) of the specific resource you want to destroy. 
+* *id*: this is the identifier (usually a GUID) of the specific resource you want to destroy.
 
 .. code-block:: js
     :linenos:
@@ -166,7 +166,7 @@ Trigger a password_grant request by calling the passwordGrant method on the Knot
 
     });
 
-The response object on a sucessful credentials request will contain an access_token that needs to be submited as a header to all endpoint requiring user authentication
+The response object on a successful credentials request will contain an access_token that needs to be submited as a header to all endpoint requiring user authentication
 
             ``-H "Authorization: Bearer <access_token>"``
 
@@ -232,7 +232,7 @@ A successful response will look something like the following:
 
 The most useful fields are probably username, default_identity and default_identity_type. Learn more about identities in the next section.
 
-A call to the User resource happens automatically upon sucessful authentication to get the users default_identity and default_identity_type and set it as the current_identity and current_identity_type respectively. The API will make all requests as this identity. If you want to change the current identity you can do so by making a call to KnotisApi.setCredentials().
+A call to the User resource happens automatically upon successful authentication to get the users default_identity and default_identity_type and set it as the current_identity and current_identity_type respectively. The API will make all requests as this identity. If you want to change the current identity you can do so by making a call to KnotisApi.setCredentials().
 
 .. code-block:: js
     :linenos:
@@ -241,7 +241,7 @@ A call to the User resource happens automatically upon sucessful authentication 
        current_identity: '<id guid of the identity the API should be acting as>'.
        current_idenitty_type: '<(int) the type of the identity (used for quick failing permissions)>'
     });
-              
+
 
 Available Identities
 --------------------
@@ -368,7 +368,7 @@ To get a paginated list of Establishments call retrieve():
     Content-Type: application/json
     Vary: Accept
     Allow: GET, OPTIONS
-    
+
     {
         "count": 2181862,
         "next": "https://stage-aws-cloud.knotis.net/api/v0/identity/establishment/?page=2",
@@ -393,18 +393,80 @@ To get a paginated list of Establishments call retrieve():
             ... additional establishments
         ]
     }
-        
+
 Rewards
 =======
 
-Knotis provides several ways to interact with rewards and promotions and reward them to identies.
+Knotis provides several ways to interact with rewards and promotions and reward them to identity.
+
+Rewards
+--------
+
+Rewards represents all the rewards that that are available in the system.
+
+To get a paginated list of a rewards call KnotisApi.Rewards.retrieve().
+
+.. code-block:: js
+    :linenos:
+
+    KnotisApi.Rewards.retrieve().then(response => {
+        //response Contains paginated list of offer rewards.
+    });
+
+The response looks as follows:
+
+.. code-block:: json
+    :linenos:
+
+    {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [
+            {
+                "id": "e9bd1640-86e6-445e-896b-cf2a33bd3a8c",
+                "owner_id": "4406b49e-b827-4157-8561-aa7bcf10cc1c",
+                "owner_name": "Duque Salon",
+                "offer_type": 2,
+                "title": "$25 off $75 toward any hair-related service",
+                "description": null,
+                "restrictions": "$75.00 minimum spend required",
+                "start_time": "2017-08-14T11:15:29",
+                "end_time": null,
+                "stock": null,
+                "unlimited": true,
+                "purchased": 0,
+                "redeemed": 0,
+                "published": true,
+                "active": true,
+                "completed": false,
+                "last_purchase": null,
+                "banner_image": {
+                    "url": "https:\/\/stage-aws-cloud.knotis.net\/media\/cache\/86\/93\/86933747a647049b46cc64bcf014767e.png",
+                    "id": "7b4c7c90-8428-412e-90ef-2164ccf71824"
+                },
+                "badge_image": {
+                    "url": "https:\/\/stage-aws-cloud.knotis.net\/media\/cache\/74\/61\/74610feccb289a23e5ffd99d85c8d9fe.png",
+                    "id": "b2433b02-f632-4a64-bbef-393a870ecdd5"
+                },
+                "tile_image_large": "https:\/\/stage-aws-cloud.knotis.net\/media\/cache\/e1\/8d\/e18d109b23f485b5f81db3a5aa113b21.png",
+                "tile_image_small": "https:\/\/stage-aws-cloud.knotis.net\/media\/cache\/fc\/17\/fc175d7e3f18a30069e8eca3396e8147.png",
+                "location": {
+                    "latitude": 47.6677017212,
+                    "longitude": -122.384277344
+                }
+            }
+        ]
+    }
+
+The Rewards endpoint is location aware and Rewards will be sorted closest to farthest from a point specified by calling KnotisApi.setLocation().
 
 Purchase
 --------
 
 Purchases represent rewards that have been acquired by an identity either by purchasing offers, claiming daily rewards, or recieving random rewards from uploading pictures.
 
-To get a paginated list of a users purchases call KnotisApi.Purchase.retreive().
+To get a paginated list of a users purchases call KnotisApi.Purchase.retrieve().
 
 .. code-block:: js
     :linenos:
@@ -448,7 +510,7 @@ The response looks as follows:
     }
 
 The Purchase endpoint is location aware and Purchases will be sorted closest to farthest from a point specified by calling KnotisApi.setLocation().
-    
+
 Redemption
 ----------
 
@@ -492,7 +554,7 @@ Uploading an image requires a call to KnotisApi.ImageUpload.create().
         name: '<title or caption of the image>',
         context: '<additional contextual information>'
     }).then(response => {
-        // The image has been uploaded sucessfully
+        // The image has been uploaded successfully
     });
 
 After uploading an image the server pushes the image to the Knotis CDN and saves the metadata in our database. The static URI of the uploaded asset can be found in the response data.
@@ -509,7 +571,7 @@ Listing images that belong to the current identity is achieved by making a retri
        // response contains a list of images.
     });
 
-This request only lists images where the current identity is the owner. It returns an empty list if no images are avaialable.
+This request only lists images where the current identity is the owner. It returns an empty list if no images are available.
 
 Tags
 ====
@@ -538,7 +600,7 @@ If you want to create a new Token keyword without attaching it to an object you 
      }).then(response => {
          // 200 response contains the created token data
      });
- 
+
 Tag
 ---
 
@@ -593,7 +655,7 @@ Quests allow conditions to be defined as key/value pairs and verification that t
 Quest
 -----
 
-Quests that are available for a user to activate/accept are retrieved by making a retreive request to the Quests.Quest resource.
+Quests that are available for a user to activate/accept are retrieved by making a retrieve request to the Quests.Quest resource.
 
 
 .. code-block:: js
@@ -603,7 +665,7 @@ Quests that are available for a user to activate/accept are retrieved by making 
         // 200 response contains paginated list of available quests.
 
     });
-    
+
 Active
 ------
 
@@ -645,7 +707,7 @@ Some quests require additional information to be collected for the Quest Checks 
 
     });
 
-    
+
 Completed
 ---------
 
@@ -693,7 +755,7 @@ A search query can be executed against all establishments based on the name of t
 Promotional Codes
 =================
 
-Knotis supports string based promotional codes to be redemed through the api.
+Knotis supports string based promotional codes to be redeemed through the api.
 
 .. code-block:: js
     :linenos:
@@ -701,8 +763,8 @@ Knotis supports string based promotional codes to be redemed through the api.
     KnotisApi.PromoCode.create({
         promo_code: '12345abc'
     }).then(response => {
-       // Response contains confirmation that the promocode was executed sucessfully.
-       
+       // Response contains confirmation that the promocode was executed successfully.
+
     });
 
 Due to the arbitrary nature of promo codes the responses can vary. However they should return id's to any resources created as a side effect of executing this promo code.
@@ -710,12 +772,12 @@ Due to the arbitrary nature of promo codes the responses can vary. However they 
 Messenger
 =========
 
-Messenger is the system that handles internal communications such as notifications and chat. Messenger functionality is divided into seven (7) resources. 
+Messenger is the system that handles internal communications such as notifications and chat. Messenger functionality is divided into seven (7) resources.
 
 Thread
 ------
 
-The core of messenging is the Thread. Threads can be thought of like IRC #channels or even an email thread.
+The core of messaging is the Thread. Threads can be thought of like IRC #channels or even an email thread.
 
 To create a thread you make a call to Messenger.Thread.create()
 
@@ -852,7 +914,7 @@ To create a view call Messenger.View.create()
     :linenos:
 
     KnotisApi.Messenger.View.create({
-        viewer: '<id of the Identity that has viewd the message.>',
+        viewer: '<id of the Identity that has viewed the message.>',
 	message: '<id of the Message that was viewed.>'
     }).then(response => {
         // 200 response contains a JSON object of the view metadata.
@@ -862,7 +924,7 @@ To create a view call Messenger.View.create()
 Attachment
 ----------
 
-Attachments are simply URI strings that represent an external resource. This can be a dropbox uri or the uri of an image that was uploaded to Knotis. Currently only rendering images is supported.
+Attachments are simply URI strings that represent an external resource. This can be a Dropbox uri or the uri of an image that was uploaded to Knotis. Currently only rendering images is supported.
 
 To create an attachment call Messenger.Attachment.create().
 
