@@ -84,15 +84,6 @@ class Knotis extends RestApi {
             }
         );
 
-        // OfferCollection Resources are Deprecated
-        this.OfferCollection = new Resource(
-            this, {
-                path: 'offer/collection',
-                name: 'offer_collection',
-                auth_required: false
-            }
-        );
-
         this.Individual = new Resource(
             this, {
                 path: 'identity/individual',
@@ -112,14 +103,6 @@ class Knotis extends RestApi {
             this, {
                 path: 'identity/business',
                 name: 'business'
-            }
-        );
-
-        // RedemptionScan Resources are Deprecated
-        this.RedemptionScan = new Resource(
-            this, {
-                path: 'qrcode/redeem',
-                name: 'redemptionscan'
             }
         );
 
@@ -143,13 +126,6 @@ class Knotis extends RestApi {
             this, {
                 path: 'media/imageinstance',
                 name: 'image_upload'
-            }
-        );
-
-        this.ImageReview = new Resource(
-            this, {
-                path: 'media/review',
-                name: 'image_review'
             }
         );
 
@@ -281,6 +257,13 @@ class Knotis extends RestApi {
                 api_version: 'v1'
             }
         );
+
+        this.Rewards = new Resource(
+            this, {
+                path: 'rewards',
+                name: 'rewards'
+            }
+        );
     };
 
     getLocation() {
@@ -393,13 +376,9 @@ class Knotis extends RestApi {
                     return;
 
                 });
-
             });
-
         });
-
     }
-
 }
 
 export default Knotis;
