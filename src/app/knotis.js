@@ -328,8 +328,57 @@ class Knotis extends RestApi {
             uri,
             credentials,
             headers
-        );
+        ).then((response) => {
+            if (200 !== response.status_code) {
+                //Error Case
+                reject(response);
+                return;
+            }
+
+            this.setCredentials(response.data);
+
+            let responseData = response.data;
+
+            this.User.retrieve(
+                null
+            ).then((response) => {
+                if (200 !== response.status_code) {
+                    // error case
+                    reject(response);
+                    return;
+                }
+
+                this.setCredentials({
+                    current_identity: response.data.default_identity,
+                    current_identity_type: response.data.default_identity_type,
+                });
+
+                response.data = extend(responseData, response.data);
+
+                resolve(response);
+                return;
+
+            });
+        });
     };
+
+    refreshToken(
+	refreshToken
+    ) {
+        return new Promise((resolve, reject) => {
+            var credentials = {
+                grant_type: 'refresh_token',
+                client_id: this.options.api_key,
+		client_secret: this.options.api_secret,
+		refresh_token: refreshToken
+            };
+
+            return this.authenticate(
+                credentials
+            );
+        });
+    }
+    
 
     passwordGrant(
         username,
@@ -345,38 +394,7 @@ class Knotis extends RestApi {
 
             this.authenticate(
                 credentials
-            ).then((response) => {
-                if (200 !== response.status_code) {
-                    //Error Case
-                    reject(response);
-                    return;
-                }
-
-                this.setCredentials(response.data);
-
-                let responseData = response.data;
-
-                this.User.retrieve(
-                    null
-                ).then((response) => {
-                    if (200 !== response.status_code) {
-                        // error case
-                        reject(response);
-                        return;
-                    }
-
-                    this.setCredentials({
-                        current_identity: response.data.default_identity,
-                        current_identity_type: response.data.default_identity_type,
-                    });
-
-                    response.data = extend(responseData, response.data);
-
-                    resolve(response);
-                    return;
-
-                });
-            });
+            );
         });
     }
 }
