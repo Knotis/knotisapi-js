@@ -1,6 +1,6 @@
 {
   "name": "knotisapi",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Javascript library for accessing the Knotis REST API.",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "build-dev": "babel src --out-dir dist --source-maps",
     "build-web": "WEBPACK_ENV=web webpack --progress --profile --colors",
     "prepublish": "npm run clean && npm run build",
-    "test": "npm run build-dev && intern-client config=tests/intern || true"
+    "test": "npm run build-dev && intern-client config=tests/intern"
   },
   "repository": {
     "type": "git",
