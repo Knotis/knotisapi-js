@@ -313,7 +313,9 @@ class Knotis extends RestApi {
         );
     };
 
-    authenticate(credentials) {
+    authenticate(
+	credentials
+    ) {
         let method = 'POST';
         let uri = this.options.auth_uri;
 
@@ -331,21 +333,20 @@ class Knotis extends RestApi {
         ).then((response) => {
             if (200 !== response.status_code) {
                 //Error Case
-                reject(response);
-                return;
+                return response;
             }
 
             this.setCredentials(response.data);
 
             let responseData = response.data;
 
-            this.User.retrieve(
+            return this.User.retrieve(
                 null
             ).then((response) => {
                 if (200 !== response.status_code) {
                     // error case
-                    reject(response);
-                    return;
+                    return response;
+
                 }
 
                 this.setCredentials({
@@ -355,28 +356,28 @@ class Knotis extends RestApi {
 
                 response.data = extend(responseData, response.data);
 
-                resolve(response);
-                return;
+                return response;
 
             });
+
         });
+
     };
 
     refreshToken(
 	refreshToken
     ) {
-        return new Promise((resolve, reject) => {
-            var credentials = {
-                grant_type: 'refresh_token',
-                client_id: this.options.api_key,
-		client_secret: this.options.api_secret,
-		refresh_token: refreshToken
-            };
+        var credentials = {
+            grant_type: 'refresh_token',
+            client_id: this.options.api_key,
+	    client_secret: this.options.api_secret,
+	    refresh_token: refreshToken
+        };
 
-            return this.authenticate(
-                credentials
-            );
-        });
+        return this.authenticate(
+            credentials
+        );
+
     };
     
 
@@ -384,19 +385,19 @@ class Knotis extends RestApi {
         username,
         password
     ) {
-        return new Promise((resolve, reject) => {
-            var credentials = {
-                grant_type: 'password',
-                client_id: this.options.api_key,
-                username: username,
-                password: password
-            };
+        var credentials = {
+            grant_type: 'password',
+            client_id: this.options.api_key,
+            username: username,
+            password: password
+        };
 
-            return this.authenticate(
-                credentials
-            );
-        });
+        return this.authenticate(
+            credentials
+        );
+	
     }
 }
+
 
 export default Knotis;
