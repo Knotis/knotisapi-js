@@ -377,7 +377,7 @@ class Knotis extends RestApi {
                 credentials
             );
         });
-    }
+    };
     
 
     passwordGrant(
@@ -392,7 +392,7 @@ class Knotis extends RestApi {
                 password: password
             };
 
-            this.authenticate(
+            return this.authenticate(
                 credentials
             );
         });
