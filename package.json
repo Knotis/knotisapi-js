@@ -9,7 +9,8 @@
     "build-dev": "babel src --out-dir dist --source-maps",
     "build-web": "WEBPACK_ENV=web webpack --progress --profile --colors",
     "prepublish": "npm run clean && npm run build",
-    "test": "npm run build-dev && intern-client config=tests/intern"
+    "test": "jest --coverage --config __tests__/jest.unit.js",
+    "integration": "jest --coverage --config __tests__/jest.integration.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   },
   "homepage": "https://github.com/knotis/knotisapi-js#readme",
   "devDependencies": {
+    "aws-sdk": "^2.151.0",
     "babel": "^6.5.2",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.9.1",
@@ -45,8 +47,9 @@
     "eslint-loader": "^1.3.0",
     "exports-loader": "^0.6.3",
     "imports-loader": "^0.6.5",
-    "intern": "^3.2.3",
+    "jest": "^21.2.1",
     "json-loader": "^0.5.4",
+    "request": "^2.83.0",
     "webpack": "^1.13.1"
   },
   "dependencies": {
