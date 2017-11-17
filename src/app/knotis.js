@@ -365,13 +365,13 @@ class Knotis extends RestApi {
     };
 
     refreshToken(
-	refreshToken
+        refreshToken
     ) {
         var credentials = {
             grant_type: 'refresh_token',
             client_id: this.options.api_key,
-	    client_secret: this.options.api_secret,
-	    refresh_token: refreshToken
+            client_secret: this.options.api_secret,
+            refresh_token: refreshToken
         };
 
         return this.authenticate(

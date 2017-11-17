@@ -49,3 +49,6 @@ build*/
 
 # Build directories for docs.
 docs/build/
+
+config/
+
