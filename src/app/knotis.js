@@ -264,6 +264,22 @@ class Knotis extends RestApi {
                 name: 'rewards'
             }
         );
+
+        this.StripeCustomer = new Resource(
+            this, {
+                path: 'stripe/customer',
+                name: 'stripe_customer'
+            }
+        );
+
+        this.StripeCustomerCard = new Resource(
+            this, {
+                path: 'stripe/customer/card',
+                name: 'stripe_customer_card'
+            }
+        );
+
+        this.StripeCustomer.Card = this.StripeCustomerCard;
     };
 
     getLocation() {
@@ -314,7 +330,7 @@ class Knotis extends RestApi {
     };
 
     authenticate(
-	credentials
+        credentials
     ) {
         let method = 'POST';
         let uri = this.options.auth_uri;
@@ -346,7 +362,6 @@ class Knotis extends RestApi {
                 if (200 !== response.status_code) {
                     // error case
                     return response;
-
                 }
 
                 this.setCredentials({
@@ -357,11 +372,8 @@ class Knotis extends RestApi {
                 response.data = extend(responseData, response.data);
 
                 return response;
-
             });
-
         });
-
     };
 
     refreshToken(
@@ -377,9 +389,7 @@ class Knotis extends RestApi {
         return this.authenticate(
             credentials
         );
-
     };
-    
 
     passwordGrant(
         username,
@@ -395,7 +405,6 @@ class Knotis extends RestApi {
         return this.authenticate(
             credentials
         );
-	
     }
 }
 
