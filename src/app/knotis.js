@@ -106,6 +106,17 @@ class Knotis extends RestApi {
             }
         );
 
+        this.PlaidItem = new Resource(
+            this, {
+                path: 'plaid/item',
+                name: 'plaid_item'
+            }
+        );
+
+        this.Plaid = {
+            Item: this.PlaidItem
+        }
+
         this.Purchase = new Resource(
             this, {
                 path: 'transaction/purchase',
