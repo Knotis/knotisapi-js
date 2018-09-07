@@ -331,7 +331,15 @@ class Knotis extends RestApi {
             }
         );
 
+        this.StripeCustomerBank = new Resource(
+            this, {
+                path: 'stripe/customer/bank',
+                name: 'stripe_customer_bank'
+            }
+        );
+
         this.StripeCustomer.Card = this.StripeCustomerCard;
+        this.StripeCustomer.Bank = this.StripeCustomerBank;
     };
 
     getLocation() {
