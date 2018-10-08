@@ -169,6 +169,16 @@ class Knotis extends RestApi {
             }
         );
 
+        this.SearchSuggest = new Resource(
+            this, {
+                path: 'search/suggest',
+                name: 'search_suggest',
+                auth_required: false
+            }
+        );
+
+        this.Search.Suggest = this.SearchSuggest;
+
         this.PromoCode = new Resource(
             this, {
                 path: 'promocode/redeem',

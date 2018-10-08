@@ -1,6 +1,6 @@
 {
   "name": "knotisapi",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "Javascript library for accessing the Knotis REST API.",
   "main": "dist/index.js",
   "scripts": {
