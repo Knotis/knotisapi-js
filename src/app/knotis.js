@@ -133,25 +133,9 @@ class Knotis extends RestApi {
             }
         );
 
-        this.Income = new Resource(
-            this, {
-                path: 'transaction/income',
-                name: 'purchase'
-            }
-        );
-
-        this.Revenue = new Resource(
-            this, {
-                path: 'transaction/revenue',
-                name: 'revenue'
-            }
-        );
-
         this.Transaction = {
             Purchase: this.Purchase,
-            Redemption: this.Redemption,
-            Income: this.Income,
-            Revenue: this.Revenue
+            Redemption: this.Redemption
         };
 
         this.ImageUpload = new Resource(
@@ -324,8 +308,28 @@ class Knotis extends RestApi {
             }
         );
 
-        this.Rewards.Claimed = this.RewardsClaimed;
-        this.Rewards.Used = this.RewardsUsed;
+        this.Income = new Resource(
+            this, {
+                path: 'rewards/income',
+                name: 'rewards_income',
+                api_version: 'v1'
+            }
+        );
+
+        this.Revenue = new Resource(
+            this, {
+                path: 'rewards/revenue',
+                name: 'rewards_revenue',
+                api_version: 'v1'
+            }
+        );
+
+        this.Rewards = {
+            Claimed: this.RewardsClaimed,
+            Used: this.RewardsUsed,
+            Income: this.Income,
+            Revenue: this.Revenue
+        };
 
         this.StripeCustomer = new Resource(
             this, {
