@@ -52,3 +52,5 @@ docs/build/
 
 config/
 
+# Mac
+*.DS_Store

@@ -324,12 +324,10 @@ class Knotis extends RestApi {
             }
         );
 
-        this.Rewards = {
-            Claimed: this.RewardsClaimed,
-            Used: this.RewardsUsed,
-            Income: this.Income,
-            Revenue: this.Revenue
-        };
+        this.Rewards.Claimed = this.RewardsClaimed;
+        this.Rewards.Used = this.RewardsUsed;
+        this.Rewards.Income = this.Income;
+        this.Rewards.Revenue = this.Revenue;
 
         this.StripeCustomer = new Resource(
             this, {
