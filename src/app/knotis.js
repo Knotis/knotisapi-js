@@ -308,6 +308,14 @@ class Knotis extends RestApi {
             }
         );
 
+        this.Ledger = new Resource(
+            this, {
+                path: 'rewards/ledger',
+                name: 'rewards_ledger',
+                api_version: 'v1'
+            }
+        );
+
         this.Income = new Resource(
             this, {
                 path: 'rewards/income',
@@ -328,6 +336,7 @@ class Knotis extends RestApi {
         this.Rewards.Used = this.RewardsUsed;
         this.Rewards.Income = this.Income;
         this.Rewards.Revenue = this.Revenue;
+        this.Rewards.Ledger = this.Ledger;
 
         this.StripeCustomer = new Resource(
             this, {
